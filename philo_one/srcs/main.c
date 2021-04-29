@@ -1,14 +1,34 @@
 #include "philo_one.h"
 
-int	init_philos(int num)
+void	init_param(t_philo *philo, t_info *info)
 {
-	int i;
+	philo->num_of_people = info->num_of_people;
+	philo->time_to_die = info->time_to_die;
+	philo->time_to_eat = info->time_to_eat;
+	philo->time_to_sleep = info->time_to_sleep;
+	philo->must_eat = info->must_eat;
+}
 
+int	init_philos(int num, t_info *info)
+{
+	int		i;
+	int		ret;
+	t_philo	*philos;
+
+	philos = (t_philo *)malloc(sizeof(t_philo) * num);
+	if (philos == NULL)
+		return (1);
 	i = 0;
 	while (i < num)
 	{
+		philos[i].last_eat_time = -1;
+		ret = pthread_mutex_init(&(philos[i].let_mutex), NULL);
+		if (ret)
+			return (1);
+		init_param(&philos[i], info);
 		i++;
 	}
+	info->philos = philos;
 	return (0);
 }
 
@@ -36,7 +56,5 @@ int main(int argc, char *argv[])
 
 	if (init_info(&info, argc, argv))
 		return (1);
-	(void)argc;
-	(void)argv;
 	return (0);
 }

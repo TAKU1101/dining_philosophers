@@ -4,11 +4,20 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdlib.h>
 
 typedef struct s_philo
 {
+	int				philo_nb;
+	int				eat_nb;
+	int				num_of_people;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				must_eat;
 	pthread_t		thread;
 	long			last_eat_time;
+	pthread_mutex_t	let_mutex;
 }					t_philo;
 
 typedef struct s_monitor
