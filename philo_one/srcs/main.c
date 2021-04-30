@@ -23,11 +23,14 @@ int	init_philos(int num, t_info *info)
 	{
 		philos[i].last_eat_time = -1;
 		ret = pthread_mutex_init(&(philos[i].let_mutex), NULL);
+		philos[i].philo_nb = i;
+		philos[i].eat_nb = 0;
 		if (ret)
 			return (1);
 		init_param(&philos[i], info);
 		i++;
 	}
+	// printf("philo nb: %d\n", philos[0].philo_nb);
 	info->philos = philos;
 	return (0);
 }
@@ -47,6 +50,8 @@ int	init_info(t_info *info, int argc, char *argv[])
 		if (info->must_eat < 0)
 			return (1);
 	}
+	if (init_philos(info->num_of_people, info))
+		return (1);
 	return (0);
 }
 
@@ -55,6 +60,10 @@ int main(int argc, char *argv[])
 	t_info	info;
 
 	if (init_info(&info, argc, argv))
+		return (1);
+	if (philo_exec(&info))
+		return (1);
+	if (philo_join(&info))
 		return (1);
 	return (0);
 }

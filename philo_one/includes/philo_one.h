@@ -40,5 +40,8 @@ typedef struct s_info
 int					ft_atoi(const char *str);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_isdigit(int c);
+int					philo_exec(t_info *info);
+void				*philo_work(void *arg);
+int					philo_join(t_info *info);
 
 #endif
