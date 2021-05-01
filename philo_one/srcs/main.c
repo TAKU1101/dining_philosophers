@@ -17,7 +17,7 @@ int	init_philos(int num, t_info *info)
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * num);
 	if (philos == NULL)
-		return (1);
+		return (error_log(ERROR_MALLOC));
 	i = 0;
 	while (i < num)
 	{
@@ -26,11 +26,10 @@ int	init_philos(int num, t_info *info)
 		philos[i].philo_nb = i;
 		philos[i].eat_nb = 0;
 		if (ret)
-			return (1);
+			return (error_log(ERROR_MUTEX_INIT));
 		init_param(&philos[i], info);
 		i++;
 	}
-	// printf("philo nb: %d\n", philos[0].philo_nb);
 	info->philos = philos;
 	return (0);
 }
@@ -38,7 +37,7 @@ int	init_philos(int num, t_info *info)
 int	init_info(t_info *info, int argc, char *argv[])
 {
 	if (argc != 5 && argc != 6)
-		return (1);
+		return (error_log(ERROR_PARAM_NUM));
 	info->num_of_people = ft_atoi(argv[1]);
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
@@ -48,7 +47,7 @@ int	init_info(t_info *info, int argc, char *argv[])
 	{
 		info->must_eat = ft_atoi(argv[5]);
 		if (info->must_eat < 0)
-			return (1);
+			return (error_log(ERROR_PARAM));
 	}
 	if (init_philos(info->num_of_people, info))
 		return (1);
