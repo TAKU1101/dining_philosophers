@@ -28,6 +28,8 @@ int	init_philos(int num, t_info *info)
 		if (ret)
 			return (error_log(ERROR_MUTEX_INIT));
 		init_param(&philos[i], info);
+		philos[i].left = &(info->forks[i]);
+		philos[i].right = &(info->forks[(i + 1) % info->num_of_people]);
 		i++;
 	}
 	info->philos = philos;
