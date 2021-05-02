@@ -6,6 +6,7 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 
 # define ERROR_PARAM_NUM		"The number of arguments should be 4-5."
 # define ERROR_PARAM			"Invalid argument value"

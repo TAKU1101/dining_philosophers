@@ -36,6 +36,27 @@ int	init_philos(int num, t_info *info)
 	return (0);
 }
 
+int	init_fork(t_info *info, int n)
+{
+	int i;
+	int	ret;
+	pthread_mutex_t	*forks;
+
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * n);
+	if (forks == NULL)
+		return (error_log(ERROR_MALLOC));
+	i = 0;
+	while (i < n)
+	{
+		ret = pthread_mutex_init(&(forks[i]), NULL);
+		if (ret)
+			return (error_log(ERROR_MALLOC));
+		i++;
+	}
+	info->forks = forks;
+	return (0);
+}
+
 int	init_info(t_info *info, int argc, char *argv[])
 {
 	if (argc != 5 && argc != 6)
@@ -51,6 +72,8 @@ int	init_info(t_info *info, int argc, char *argv[])
 		if (info->must_eat < 0)
 			return (error_log(ERROR_PARAM));
 	}
+	if (init_fork(info, info->num_of_people))
+		return (1);
 	if (init_philos(info->num_of_people, info))
 		return (1);
 	return (0);
