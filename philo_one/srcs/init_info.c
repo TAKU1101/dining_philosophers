@@ -9,10 +9,26 @@ static void	init_param(t_philo *philo, t_info *info)
 	philo->must_eat = info->must_eat;
 }
 
+static int	init_philo(t_philo *philo, t_info *info, int i)
+{
+	int ret;
+
+	philo->last_eat_time = -1;
+	ret = pthread_mutex_init(&(philo->let_mutex), NULL);
+	philo->philo_nb = i;
+	philo->eat_nb = 0;
+	if (ret)
+		return (error_log(ERROR_MUTEX_INIT));
+	init_param(philo, info);
+	philo->left = &(info->forks[i]);
+	philo->right = &(info->forks[(i + 1) % info->num_of_people]);
+	return (0);
+}
+
 static int	init_philos(int num, t_info *info)
 {
 	int		i;
-	int		ret;
+//	int		ret;
 	t_philo	*philos;
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * num);
@@ -21,15 +37,8 @@ static int	init_philos(int num, t_info *info)
 	i = 0;
 	while (i < num)
 	{
-		philos[i].last_eat_time = -1;
-		ret = pthread_mutex_init(&(philos[i].let_mutex), NULL);
-		philos[i].philo_nb = i;
-		philos[i].eat_nb = 0;
-		if (ret)
-			return (error_log(ERROR_MUTEX_INIT));
-		init_param(&philos[i], info);
-		philos[i].left = &(info->forks[i]);
-		philos[i].right = &(info->forks[(i + 1) % info->num_of_people]);
+		if (init_philo(&(philos[i]), info, i))
+			return (1);
 		i++;
 	}
 	info->philos = philos;
@@ -57,17 +66,6 @@ static int	init_fork(t_info *info, int n)
 	return (0);
 }
 
-static int	init_monitor(t_info *info)
-{
-	t_monitor	*monitor;
-
-	monitor = (t_monitor *)malloc(sizeof(t_monitor));
-	if (monitor == NULL)
-		return (error_log(ERROR_MALLOC));
-	info->monitor = monitor;
-	return (0);
-}
-
 int	init_info(t_info *info, int argc, char *argv[])
 {
 	if (argc != 5 && argc != 6)
@@ -86,8 +84,6 @@ int	init_info(t_info *info, int argc, char *argv[])
 	if (init_fork(info, info->num_of_people))
 		return (1);
 	if (init_philos(info->num_of_people, info))
-		return (1);
-	if (init_monitor(info))
 		return (1);
 	return (0);
 }
