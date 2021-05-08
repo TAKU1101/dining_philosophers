@@ -24,12 +24,12 @@ static int	is_dead(t_philo *philo)
 	ret = 0;
 	if (pthread_mutex_lock(&philo->let_mutex))
 		return (error_log(ERROR_MUTEX_LOCK));
-	if (philo->is_dead)
+	if (*(philo->is_dead) == philo->num_of_people)
 		ret = 1;
 	else if ((now - philo->last_eat_time) >= philo->time_to_die)
 	{
 		ret = 1;
-		philo->is_dead = 1;
+		*(philo->is_dead) = philo->num_of_people;
 		philo_log(philo->philo_nb, LOG_DIED);
 	}
 	if (pthread_mutex_unlock(&philo->let_mutex))
@@ -74,6 +74,10 @@ void	*philo_work(void *arg)
 	{
 		philo_take_fork(philo);
 		ret = philo_after_eat(philo);
+		if (ret)
+		{
+			if (pthread_mutex_lock(philo->))
+		}
 	}
 	return (NULL);
 }

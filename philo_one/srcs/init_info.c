@@ -11,7 +11,7 @@ static void	init_param(t_philo *philo, t_info *info)
 
 static int	init_philo(t_philo *philo, t_info *info, int i)
 {
-	int ret;
+	int	ret;
 
 	philo->last_eat_time = -1;
 	ret = pthread_mutex_init(&(philo->let_mutex), NULL);
@@ -27,18 +27,27 @@ static int	init_philo(t_philo *philo, t_info *info, int i)
 
 static int	init_philos(int num, t_info *info)
 {
-	int		i;
-//	int		ret;
-	t_philo	*philos;
+	int				i;
+	int				*is_dead;
+	t_philo			*philos;
+	pthread_mutex_t	*is_dead_mutex;
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * num);
 	if (philos == NULL)
+		return (error_log(ERROR_MALLOC));
+	is_dead = (int *)malloc(sizeof(int));
+	if (is_dead == NULL)
+		return (error_log(ERROR_MALLOC));
+	is_dead_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (is_dead_mutex == NULL)
 		return (error_log(ERROR_MALLOC));
 	i = 0;
 	while (i < num)
 	{
 		if (init_philo(&(philos[i]), info, i))
 			return (1);
+		philos[i].is_dead = is_dead;
+		philos[i].is_dead_mutex = is_dead_mutex;
 		i++;
 	}
 	info->philos = philos;
