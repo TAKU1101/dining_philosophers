@@ -24,8 +24,14 @@ static int	is_dead(t_philo *philo)
 	ret = 0;
 	if (pthread_mutex_lock(&philo->let_mutex))
 		return (error_log(ERROR_MUTEX_LOCK));
-	if ((now - philo->last_eat_time) >= philo->time_to_die)
+	if (philo->is_dead)
 		ret = 1;
+	else if ((now - philo->last_eat_time) >= philo->time_to_die)
+	{
+		ret = 1;
+		philo->is_dead = 1;
+		philo_log(philo->philo_nb, LOG_DIED);
+	}
 	if (pthread_mutex_unlock(&philo->let_mutex))
 		return (error_log(ERROR_MUTEX_UNLOCK));
 	return (ret);
@@ -34,13 +40,13 @@ static int	is_dead(t_philo *philo)
 static int	philo_after_eat(t_philo *philo)
 {
 	philo_log(philo->philo_nb, LOG_EATING);
-	philo->eat_nb = philo->eat_nb + 1;
 	if (pthread_mutex_lock(&philo->let_mutex))
 		return (error_log(ERROR_MUTEX_LOCK));
 	philo->last_eat_time = get_time();
+	philo->eat_nb = philo->eat_nb + 1;
 	if (pthread_mutex_unlock(&philo->let_mutex))
 		return (error_log(ERROR_MUTEX_UNLOCK));
-	usleep(philo->time_to_eat * 1000);
+	wait_time(philo->time_to_eat);
 	if (pthread_mutex_unlock(philo->left))
 		return (error_log(ERROR_MUTEX_UNLOCK));
 	if (pthread_mutex_unlock(philo->right))
@@ -48,7 +54,7 @@ static int	philo_after_eat(t_philo *philo)
 	if (is_dead(philo))
 		return (1);
 	philo_log(philo->philo_nb, LOG_SLEEPING);
-	usleep(philo->time_to_sleep * 1000);
+	wait_time(philo->time_to_sleep);
 	if (is_dead(philo))
 		return (1);
 	philo_log(philo->philo_nb, LOG_THINKING);

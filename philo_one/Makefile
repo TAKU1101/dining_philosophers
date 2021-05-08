@@ -1,7 +1,7 @@
 NAME	= philo_one
 
 CC		= gcc
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -g
 
 SRCS	= ${shell find ./srcs -type f -name "*.c"}
 

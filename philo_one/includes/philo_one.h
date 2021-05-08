@@ -35,6 +35,7 @@ typedef struct s_philo
 	int				must_eat;
 	pthread_t		thread;
 	long			last_eat_time;
+	int				is_dead;
 	pthread_mutex_t	let_mutex;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
@@ -42,7 +43,7 @@ typedef struct s_philo
 
 typedef struct s_monitor
 {
-	pthread_mutex_t	monitor;
+	pthread_t		monitor;
 }					t_monitor;
 
 typedef struct s_info
@@ -54,18 +55,19 @@ typedef struct s_info
 	int				must_eat;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
-	t_monitor		monitor;
+	t_monitor		*monitor;
 }					t_info;
 
 int					ft_atoi(const char *str);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_isdigit(int c);
-
+int					init_info(t_info *info, int argc, char *argv[]);
 int					philo_exec(t_info *info);
 void				*philo_work(void *arg);
 int					philo_join(t_info *info);
 int					error_log(char *err_msg);
 int					philo_log(int nb, char *log);
 long				get_time();
+void	wait_time(long time);
 
 #endif

@@ -1,6 +1,6 @@
 #include "philo_one.h"
 
-void	init_param(t_philo *philo, t_info *info)
+static void	init_param(t_philo *philo, t_info *info)
 {
 	philo->num_of_people = info->num_of_people;
 	philo->time_to_die = info->time_to_die;
@@ -9,7 +9,7 @@ void	init_param(t_philo *philo, t_info *info)
 	philo->must_eat = info->must_eat;
 }
 
-int	init_philos(int num, t_info *info)
+static int	init_philos(int num, t_info *info)
 {
 	int		i;
 	int		ret;
@@ -36,7 +36,7 @@ int	init_philos(int num, t_info *info)
 	return (0);
 }
 
-int	init_fork(t_info *info, int n)
+static int	init_fork(t_info *info, int n)
 {
 	int i;
 	int	ret;
@@ -54,6 +54,17 @@ int	init_fork(t_info *info, int n)
 		i++;
 	}
 	info->forks = forks;
+	return (0);
+}
+
+static int	init_monitor(t_info *info)
+{
+	t_monitor	*monitor;
+
+	monitor = (t_monitor *)malloc(sizeof(t_monitor));
+	if (monitor == NULL)
+		return (error_log(ERROR_MALLOC));
+	info->monitor = monitor;
 	return (0);
 }
 
@@ -76,18 +87,7 @@ int	init_info(t_info *info, int argc, char *argv[])
 		return (1);
 	if (init_philos(info->num_of_people, info))
 		return (1);
-	return (0);
-}
-
-int main(int argc, char *argv[])
-{
-	t_info	info;
-
-	if (init_info(&info, argc, argv))
-		return (1);
-	if (philo_exec(&info))
-		return (1);
-	if (philo_join(&info))
+	if (init_monitor(info))
 		return (1);
 	return (0);
 }
