@@ -22,10 +22,10 @@ static int	is_dead(t_philo *philo)
 
 	now = get_time();
 	ret = 0;
-	if (pthread_mutex_lock(&philo->let_mutex))
-		return (error_log(ERROR_MUTEX_LOCK));
-//	if (pthread_mutex_lock(philo->is_dead_mutex))
+//	if (pthread_mutex_lock(&philo->let_mutex))
 //		return (error_log(ERROR_MUTEX_LOCK));
+	if (pthread_mutex_lock(philo->is_dead_mutex))
+		return (error_log(ERROR_MUTEX_LOCK));
 	if (*(philo->is_dead) == philo->num_of_people)
 		ret = 1;
 	else if ((now - philo->last_eat_time) >= philo->time_to_die)
@@ -34,26 +34,28 @@ static int	is_dead(t_philo *philo)
 		*(philo->is_dead) = philo->num_of_people;
 		philo_log(philo->philo_nb, LOG_DIED);
 	}
-//	if (pthread_mutex_unlock(philo->is_dead_mutex))
-//		return (error_log(ERROR_MUTEX_UNLOCK));
-	if (pthread_mutex_unlock(&philo->let_mutex))
+	if (pthread_mutex_unlock(philo->is_dead_mutex))
 		return (error_log(ERROR_MUTEX_UNLOCK));
+//	if (pthread_mutex_unlock(&philo->let_mutex))
+//		return (error_log(ERROR_MUTEX_UNLOCK));
 	return (ret);
 }
 
 static int	philo_after_eat(t_philo *philo)
 {
 	philo_log(philo->philo_nb, LOG_EATING);
-	if (pthread_mutex_lock(&philo->let_mutex))
-		return (error_log(ERROR_MUTEX_LOCK));
+//	if (pthread_mutex_lock(&philo->let_mutex))
+//		return (error_log(ERROR_MUTEX_LOCK));
 	philo->last_eat_time = get_time();
 	philo->eat_nb = philo->eat_nb + 1;
+	if (pthread_mutex_lock(philo->is_dead_mutex))
+		return (error_log(ERROR_MUTEX_LOCK));
 	if (philo->eat_nb == philo->must_eat)
-	{
-		(void)0;
-	}
-	if (pthread_mutex_unlock(&philo->let_mutex))
+		*(philo->is_dead) = *(philo->is_dead) + 1;
+	if (pthread_mutex_unlock(philo->is_dead_mutex))
 		return (error_log(ERROR_MUTEX_UNLOCK));
+//	if (pthread_mutex_unlock(&philo->let_mutex))
+//		return (error_log(ERROR_MUTEX_UNLOCK));
 	wait_time(philo->time_to_eat);
 	if (pthread_mutex_unlock(philo->left))
 		return (error_log(ERROR_MUTEX_UNLOCK));
@@ -75,6 +77,7 @@ void	*philo_work(void *arg)
 	int ret;
 
 	philo = (t_philo *)arg;
+	philo->last_eat_time = get_time();
 	if (philo->philo_nb % 2)
 		usleep(200);
 	ret = 0;

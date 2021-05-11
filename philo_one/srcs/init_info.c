@@ -41,6 +41,8 @@ static int	init_philos(int num, t_info *info)
 	is_dead_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	if (is_dead_mutex == NULL)
 		return (error_log(ERROR_MALLOC));
+	if (pthread_mutex_init(is_dead_mutex, NULL))
+		return (error_log(ERROR_MUTEX_INIT));
 	i = 0;
 	while (i < num)
 	{
