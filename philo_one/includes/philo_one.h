@@ -1,5 +1,5 @@
-#ifndef PHILO_ONE
-# define PHILO_ONE
+#ifndef PHILO_ONE_H
+# define PHILO_ONE_H
 
 # include <stdio.h>
 # include <sys/time.h>
@@ -36,7 +36,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	long			last_eat_time;
 	int				*is_dead;
-//	pthread_mutex_t	let_mutex;
 	pthread_mutex_t	*is_dead_mutex;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
@@ -68,7 +67,7 @@ void				*philo_work(void *arg);
 int					philo_join(t_info *info);
 int					error_log(char *err_msg);
 int					philo_log(int nb, char *log);
-long				get_time();
+long				get_time(void);
 void				wait_time(long time);
 int					free_info(t_info *info);
 

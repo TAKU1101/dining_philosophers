@@ -2,7 +2,7 @@
 
 int	error_log(char *err_msg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (err_msg[i])
@@ -14,7 +14,7 @@ int	error_log(char *err_msg)
 	return (1);
 }
 
-long	get_time()
+long	get_time(void)
 {
 	struct timeval	tv;
 

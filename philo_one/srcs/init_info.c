@@ -9,25 +9,31 @@ static void	init_param(t_philo *philo, t_info *info)
 	philo->must_eat = info->must_eat;
 }
 
-static int	init_philo(t_philo *philo, t_info *info, int i)
+static int	init_philo(t_info *info, int *is_dead, \
+								pthread_mutex_t *is_dead_mutex)
 {
-//	int	ret;
+	int		i;
+	t_philo	*philos;
 
-	philo->last_eat_time = -1;
-//	ret = pthread_mutex_init(&(philo->let_mutex), NULL);
-	philo->philo_nb = i;
-	philo->eat_nb = 0;
-//	if (ret)
-//		return (error_log(ERROR_MUTEX_INIT));
-	init_param(philo, info);
-	philo->left = &(info->forks[i]);
-	philo->right = &(info->forks[(i + 1) % info->num_of_people]);
+	i = 0;
+	philos = info->philos;
+	while (i < info->num_of_people)
+	{
+		philos[i].last_eat_time = -1;
+		philos[i].philo_nb = i;
+		philos[i].eat_nb = 0;
+		init_param(&(philos[i]), info);
+		philos[i].left = &(info->forks[i]);
+		philos[i].right = &(info->forks[(i + 1) % info->num_of_people]);
+		philos[i].is_dead = is_dead;
+		philos[i].is_dead_mutex = is_dead_mutex;
+		i++;
+	}
 	return (0);
 }
 
 static int	init_philos(int num, t_info *info)
 {
-	int				i;
 	int				*is_dead;
 	t_philo			*philos;
 	pthread_mutex_t	*is_dead_mutex;
@@ -35,6 +41,7 @@ static int	init_philos(int num, t_info *info)
 	philos = (t_philo *)malloc(sizeof(t_philo) * num);
 	if (philos == NULL)
 		return (error_log(ERROR_MALLOC));
+	info->philos = philos;
 	is_dead = (int *)malloc(sizeof(int));
 	if (is_dead == NULL)
 		return (error_log(ERROR_MALLOC));
@@ -44,23 +51,14 @@ static int	init_philos(int num, t_info *info)
 		return (error_log(ERROR_MALLOC));
 	if (pthread_mutex_init(is_dead_mutex, NULL))
 		return (error_log(ERROR_MUTEX_INIT));
-	i = 0;
-	while (i < num)
-	{
-		if (init_philo(&(philos[i]), info, i))
-			return (1);
-		philos[i].is_dead = is_dead;
-		philos[i].is_dead_mutex = is_dead_mutex;
-		i++;
-	}
-	info->philos = philos;
+	init_philo(info, is_dead, is_dead_mutex);
 	return (0);
 }
 
 static int	init_fork(t_info *info, int n)
 {
-	int i;
-	int	ret;
+	int				i;
+	int				ret;
 	pthread_mutex_t	*forks;
 
 	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * n);
