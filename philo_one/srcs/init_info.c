@@ -11,14 +11,14 @@ static void	init_param(t_philo *philo, t_info *info)
 
 static int	init_philo(t_philo *philo, t_info *info, int i)
 {
-	int	ret;
+//	int	ret;
 
 	philo->last_eat_time = -1;
-	ret = pthread_mutex_init(&(philo->let_mutex), NULL);
+//	ret = pthread_mutex_init(&(philo->let_mutex), NULL);
 	philo->philo_nb = i;
 	philo->eat_nb = 0;
-	if (ret)
-		return (error_log(ERROR_MUTEX_INIT));
+//	if (ret)
+//		return (error_log(ERROR_MUTEX_INIT));
 	init_param(philo, info);
 	philo->left = &(info->forks[i]);
 	philo->right = &(info->forks[(i + 1) % info->num_of_people]);

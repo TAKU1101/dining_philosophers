@@ -36,7 +36,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	long			last_eat_time;
 	int				*is_dead;
-	pthread_mutex_t	let_mutex;
+//	pthread_mutex_t	let_mutex;
 	pthread_mutex_t	*is_dead_mutex;
 	pthread_mutex_t	*left;
 	pthread_mutex_t	*right;
