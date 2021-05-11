@@ -16,7 +16,7 @@
 # define ERROR_MUTEX_INIT		"mutex init failed."
 # define ERROR_MUTEX_LOCK		"mutex lock failed."
 # define ERROR_MUTEX_UNLOCK		"mutex unlock failed."
-# define ERROR_MUTEX_DEAD		"mutex destroy failed."
+# define ERROR_MUTEX_DESTROY	"mutex destroy failed."
 
 # define LOG_TAKEEN		"has taken a fork"
 # define LOG_EATING		"is eating"
@@ -69,6 +69,7 @@ int					philo_join(t_info *info);
 int					error_log(char *err_msg);
 int					philo_log(int nb, char *log);
 long				get_time();
-void	wait_time(long time);
+void				wait_time(long time);
+int					free_info(t_info *info);
 
 #endif
