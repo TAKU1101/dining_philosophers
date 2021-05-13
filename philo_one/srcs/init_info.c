@@ -48,11 +48,13 @@ static int	init_philos(int num, t_info *info)
 	if (is_dead == NULL)
 		return (error_log(ERROR_MALLOC));
 	*is_dead = 0;
+	info->is_dead = is_dead;
 	is_dead_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	if (is_dead_mutex == NULL)
 		return (error_log(ERROR_MALLOC));
 	if (pthread_mutex_init(is_dead_mutex, NULL))
 		return (error_log(ERROR_MUTEX_INIT));
+	info->is_dead_mutex = is_dead_mutex;
 	init_philo(info, is_dead, is_dead_mutex);
 	return (0);
 }

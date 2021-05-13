@@ -54,6 +54,8 @@ typedef struct s_info
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
+	int				*is_dead;
+	pthread_mutex_t	*is_dead_mutex;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 	t_monitor		*monitor;
