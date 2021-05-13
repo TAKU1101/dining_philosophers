@@ -11,6 +11,8 @@ int	philo_exec(t_info *info)
 					philo_work, (void *)&(info->philos[i]));
 		i++;
 	}
+	printf("before exec: %p\n", info->is_dead);
+	pthread_create(&(info->monitor), NULL, monitor, (void *)info);
 	return (0);
 }
 

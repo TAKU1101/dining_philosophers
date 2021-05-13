@@ -42,11 +42,6 @@ typedef struct s_philo
 	pthread_mutex_t	*right;
 }					t_philo;
 
-typedef struct s_monitor
-{
-	pthread_t		monitor;
-}					t_monitor;
-
 typedef struct s_info
 {
 	int				num_of_people;
@@ -58,7 +53,7 @@ typedef struct s_info
 	pthread_mutex_t	*is_dead_mutex;
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
-	t_monitor		*monitor;
+	pthread_t		monitor;
 }					t_info;
 
 int					ft_atoi(const char *str);
@@ -73,5 +68,6 @@ int					philo_log(int nb, char *log);
 long				get_time(void);
 void				wait_time(long time);
 int					free_info(t_info *info);
+void	*monitor(void *arg);
 
 #endif
