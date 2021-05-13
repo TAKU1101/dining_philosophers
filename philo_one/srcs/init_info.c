@@ -19,6 +19,8 @@ static int	init_philo(t_info *info, int *is_dead, \
 	philos = info->philos;
 	while (i < info->num_of_people)
 	{
+		if (pthread_mutex_init(&(philos[i].let_mutex), NULL))
+			return (error_log(ERROR_MUTEX_INIT));
 		philos[i].last_eat_time = -1;
 		philos[i].philo_nb = i;
 		philos[i].eat_nb = 0;

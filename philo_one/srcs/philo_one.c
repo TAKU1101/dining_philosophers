@@ -6,7 +6,6 @@ int	main(int argc, char *argv[])
 
 	if (init_info(&info, argc, argv))
 		return (1);
-	printf("test\n");
 	if (philo_exec(&info))
 		return (1);
 	if (philo_join(&info))
