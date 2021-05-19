@@ -1,20 +1,5 @@
 #include "philo_one.h"
 
-static int	philo_take_fork(t_philo *philo)
-{
-	int	ret;
-
-	ret = pthread_mutex_lock(philo->left);
-	if (ret)
-		return (error_log(ERROR_MUTEX_LOCK));
-	philo_log(philo->philo_nb, LOG_TAKEEN);
-	ret = pthread_mutex_lock(philo->right);
-	if (ret)
-		return (error_log(ERROR_MUTEX_LOCK));
-	philo_log(philo->philo_nb, LOG_TAKEEN);
-	return (0);
-}
-
 static int	is_dead(t_philo *philo)
 {
 	long	now;
@@ -26,22 +11,32 @@ static int	is_dead(t_philo *philo)
 		return (error_log(ERROR_MUTEX_LOCK));
 	if (*(philo->is_dead) == philo->num_of_people)
 		ret = 1;
-	/*
-	else if ((now - philo->last_eat_time) >= philo->time_to_die)
-	{
-		ret = 1;
-		*(philo->is_dead) = philo->num_of_people;
-		philo_log(philo->philo_nb, LOG_DIED);
-	}
-	*/
 	if (pthread_mutex_unlock(philo->is_dead_mutex))
 		return (error_log(ERROR_MUTEX_UNLOCK));
 	return (ret);
 }
 
+static int	philo_take_fork(t_philo *philo)
+{
+	int	ret;
+
+	ret = pthread_mutex_lock(philo->left);
+	if (ret)
+		return (error_log(ERROR_MUTEX_LOCK));
+	if (!is_dead(philo))
+		philo_log(philo->philo_nb, LOG_TAKEEN);
+	ret = pthread_mutex_lock(philo->right);
+	if (ret)
+		return (error_log(ERROR_MUTEX_LOCK));
+	if (!is_dead(philo))
+		philo_log(philo->philo_nb, LOG_TAKEEN);
+	return (0);
+}
+
 static int	philo_after_eat(t_philo *philo)
 {
-	philo_log(philo->philo_nb, LOG_EATING);
+	if (!is_dead(philo))
+		philo_log(philo->philo_nb, LOG_EATING);
 	if (pthread_mutex_lock(&(philo->let_mutex)))
 		return (error_log(ERROR_MUTEX_LOCK));
 	philo->last_eat_time = get_time();
