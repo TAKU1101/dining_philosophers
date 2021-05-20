@@ -4,6 +4,24 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <unistd.h>
+# include <sys/time.h>
+
+# define ERROR_PARAM_NUM		"The number of arguments should be 4-5."
+# define ERROR_PARAM			"Invalid argument value"
+# define ERROR_MALLOC			"Malloc failed."
+# define ERROR_THREAD_CREATE	"thread create failed."
+# define ERROR_THREAD_JOIN		"thread join failed."
+# define ERROR_MUTEX_INIT		"mutex init failed."
+# define ERROR_MUTEX_LOCK		"mutex lock failed."
+# define ERROR_MUTEX_UNLOCK		"mutex unlock failed."
+# define ERROR_MUTEX_DESTROY	"mutex destroy failed."
+
+# define LOG_TAKEEN		"has taken a fork"
+# define LOG_EATING		"is eating"
+# define LOG_SLEEPING	"is sleeping"
+# define LOG_THINKING	"is thinking"
+# define LOG_DIED		"is died"
 
 typedef struct s_philo
 {
@@ -34,5 +52,15 @@ typedef struct s_info
 	t_philo			*philos;
 	pthread_t		monitor;
 }					t_info;
+
+int					ft_atoi(const char *str);
+int					ft_strncmp(const char *str1, const char *str2, size_t n);
+int					ft_isdigit(int c);
+int					init_info(t_info *info, int argc, char *argv[]);
+int					error_log(char *msg);
+long				get_time(void);
+void				wait_time(long time);
+int					philo_log(int nb, char *log);
+int					check_param(t_info *info);
 
 #endif
