@@ -68,6 +68,6 @@ int					philo_log(int nb, char *log);
 long				get_time(void);
 void				wait_time(long time);
 int					free_info(t_info *info);
-void	*monitor(void *arg);
+void				*monitor(void *arg);
 
 #endif
