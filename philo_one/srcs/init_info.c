@@ -95,6 +95,8 @@ int	init_info(t_info *info, int argc, char *argv[])
 		if (info->must_eat < 0)
 			return (error_log(ERROR_PARAM));
 	}
+	if (check_param(info))
+		return (1);
 	if (init_fork(info, info->num_of_people))
 		return (1);
 	if (init_philos(info->num_of_people, info))

@@ -69,5 +69,6 @@ long				get_time(void);
 void				wait_time(long time);
 int					free_info(t_info *info);
 void				*monitor(void *arg);
+int					check_param(t_info *info);
 
 #endif
