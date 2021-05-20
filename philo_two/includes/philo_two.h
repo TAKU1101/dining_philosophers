@@ -6,6 +6,7 @@
 # include <semaphore.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <stdlib.h>
 
 # define ERROR_PARAM_NUM		"The number of arguments should be 4-5."
 # define ERROR_PARAM			"Invalid argument value"
@@ -32,6 +33,7 @@ typedef struct s_philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				must_eat;
 	pthread_t		thread;
 	long			last_eat_time;
 	sem_t			*let_bsem;
@@ -57,11 +59,15 @@ typedef struct s_info
 int					ft_atoi(const char *str);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_isdigit(int c);
+char				*ft_itoa(int n);
+char				*ft_strjoin(char const *s1, char const *s2);
 int					init_info(t_info *info, int argc, char *argv[]);
 int					error_log(char *msg);
 long				get_time(void);
 void				wait_time(long time);
 int					philo_log(int nb, char *log);
 int					check_param(t_info *info);
+sem_t				*sem_open_number(int n);
+int					sem_close_number(sem_t *sem, int n);
 
 #endif
