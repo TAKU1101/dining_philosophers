@@ -51,6 +51,7 @@ static int	init_philos(int num, t_info *info)
 	is_dead_bsem = sem_open("/philo_two_is_dead_bsem", O_CREAT, 0600, 1);
 	if (is_dead_bsem == NULL)
 		return (error_log(ERROR_SEM_OPEN));
+	info->is_dead_bsem = is_dead_bsem;
 	init_philo(info, is_dead, is_dead_bsem);
 	return (0);
 }

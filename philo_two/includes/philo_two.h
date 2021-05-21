@@ -72,5 +72,6 @@ int					sem_close_number(sem_t *sem, int n);
 int					philo_exec(t_info *info);
 int					philo_join(t_info *info);
 void				*philo_work(void *arg);
+void				*monitor(void *arg);
 
 #endif
