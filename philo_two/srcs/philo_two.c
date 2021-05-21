@@ -10,5 +10,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (philo_join(&info))
 		return (1);
+	if (free_info(&info))
+		return (1);
 	return (0);
 }
