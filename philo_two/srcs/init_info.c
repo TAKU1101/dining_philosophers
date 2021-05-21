@@ -47,6 +47,7 @@ static int	init_philos(int num, t_info *info)
 		return (error_log(ERROR_MALLOC));
 	*is_dead = 0;
 	info->is_dead = is_dead;
+	sem_unlink("/philo_two_is_dead_bsem");
 	is_dead_bsem = sem_open("/philo_two_is_dead_bsem", O_CREAT, 0600, 1);
 	if (is_dead_bsem == NULL)
 		return (error_log(ERROR_SEM_OPEN));
@@ -58,6 +59,7 @@ static int	init_fork(t_info *info, int n)
 {
 	sem_t	*fork;
 
+	sem_unlink("/philo_two_fork");
 	fork = sem_open("/philo_two_fork", O_CREAT, 0600, n);
 	if (fork == NULL)
 		return (error_log(ERROR_SEM_OPEN));

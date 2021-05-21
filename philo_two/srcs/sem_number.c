@@ -24,6 +24,7 @@ sem_t	*sem_open_number(int n)
 	name = gen_name(n);
 	if (name == NULL)
 		return (NULL);
+	sem_unlink(name);
 	sem = sem_open(name, O_CREAT, 0600, 1);
 	if (sem == NULL)
 		return (NULL);
