@@ -2,7 +2,7 @@
 
 static int	main_loop(t_info *info, int ret)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ret != info->num_of_people)
@@ -31,8 +31,8 @@ static int	main_loop(t_info *info, int ret)
 void	*monitor(void *arg)
 {
 	t_info	*info;
-	int	i;
-	int	ret;
+	int		i;
+	int		ret;
 
 	info = (t_info *)arg;
 	i = 0;

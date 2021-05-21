@@ -12,7 +12,7 @@ static void	init_param(t_philo *philo, t_info *info)
 static int	init_philo(t_info *info, int *is_dead,
 							sem_t *is_dead_bsem)
 {
-	int	i;
+	int		i;
 	t_philo	*philos;
 
 	i = 0;
@@ -34,7 +34,7 @@ static int	init_philo(t_info *info, int *is_dead,
 
 static int	init_philos(int num, t_info *info)
 {
-	int	*is_dead;
+	int		*is_dead;
 	sem_t	*is_dead_bsem;
 	t_philo	*philos;
 

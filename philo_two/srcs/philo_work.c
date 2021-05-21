@@ -3,7 +3,7 @@
 static int	is_dead(t_philo *philo)
 {
 	long	now;
-	int	ret;
+	int		ret;
 
 	now = get_time();
 	ret = 0;
@@ -70,7 +70,7 @@ static int	philo_after_eat(t_philo *philo)
 void	*philo_work(void *arg)
 {
 	t_philo	*philo;
-	int	ret;
+	int		ret;
 
 	philo = (t_philo *)arg;
 	if (sem_wait(philo->let_bsem))
