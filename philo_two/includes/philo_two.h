@@ -69,5 +69,8 @@ int					philo_log(int nb, char *log);
 int					check_param(t_info *info);
 sem_t				*sem_open_number(int n);
 int					sem_close_number(sem_t *sem, int n);
+int					philo_exec(t_info *info);
+int					philo_join(t_info *info);
+void				*philo_work(void *arg);
 
 #endif
