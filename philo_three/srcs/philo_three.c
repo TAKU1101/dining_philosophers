@@ -6,6 +6,8 @@ int	main(int argc, char *argv[])
 
 	if (init_info(&info, argc, argv))
 		return (1);
+	if (philo_exec(&info))
+		return (1);
 	(void)argc;
 	(void)argv;
 	return (0);

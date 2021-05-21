@@ -7,6 +7,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <stdlib.h>
+# include <sys/types.h>
 
 # define ERROR_PARAM_NUM		"The number of arguments should be 4-5."
 # define ERROR_PARAM			"Invalid argument value"
@@ -18,6 +19,7 @@
 # define ERROR_SEM_POST			"semaphore post failed."
 # define ERROR_SEM_WAIT			"semaphore wait failed."
 # define ERROR_SEM_UNLINK		"semaphore unlink failed."
+# define ERROR_FORK				"fork failed."
 
 # define LOG_TAKEEN		"has taken a fork"
 # define LOG_EATING		"is eating"
@@ -34,7 +36,7 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
-	int				pid;
+	pid_t			pid;
 	long			last_eat_time;
 	sem_t			*let_bsem;
 	int				*is_dead;
@@ -53,7 +55,7 @@ typedef struct s_info
 	sem_t			*is_dead_bsem;
 	sem_t			*fork_sem;
 	t_philo			*philos;
-	int				monitor_pid;
+	pid_t			monitor_pid;
 }					t_info;
 
 int					ft_atoi(const char *str);
@@ -69,5 +71,8 @@ void				wait_time(long time);
 int					philo_log(int nb, char *log);
 sem_t				*sem_open_number(int n);
 int					sem_close_number(sem_t *sem, int n);
+int	philo_exec(t_info *info);
+void	*philo_work(void *arg);
+void	*monitor(void *arg);
 
 #endif
