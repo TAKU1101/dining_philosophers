@@ -48,8 +48,6 @@ static int	philo_after_eat(t_philo *philo)
 	if (sem_post(philo->let_bsem))
 		return (error_log(ERROR_SEM_POST));
 	philo->eat_nb = philo->eat_nb + 1;
-	if (is_dead(philo))
-		return (1);
 	if (sem_wait(philo->is_dead_bsem))
 		return (error_log(ERROR_SEM_WAIT));
 	if (philo->eat_nb == philo->must_eat)
