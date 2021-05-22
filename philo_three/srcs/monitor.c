@@ -11,10 +11,7 @@ static int	main_loop(t_philo *philo, int ret)
 			return (error_log(ERROR_SEM_WAIT));
 		if (get_time() - philo->last_eat_time >= philo->time_to_die)
 		{
-			// philo_log(philo->philo_nb, LOG_DIED);
-			// printf("%d %d\n", i, philo->philo_nb);
 			exit(1 + philo->philo_nb);
-			// exit(1 + philo->philo_nb);
 		}
 		if (sem_post(philo->let_bsem))
 			return (error_log(ERROR_SEM_POST));

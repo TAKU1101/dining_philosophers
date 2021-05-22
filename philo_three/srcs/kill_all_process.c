@@ -3,7 +3,7 @@
 int	kill_all_process(t_info *info)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	i = 0;
 	while (i < info->num_of_people)

@@ -10,8 +10,6 @@ static void	init_param(t_philo *philo, t_info *info)
 }
 
 static int	init_philo(t_info *info)
-//static int	init_philo(t_info *info, int *is_dead, 
-//						sem_t *is_dead_bsem)
 {
 	int		i;
 	t_philo	*philos;
@@ -23,12 +21,9 @@ static int	init_philo(t_info *info)
 		philos[i].let_bsem = sem_open_number(i, "/philo_three_let_", 1);
 		philos[i].last_eat_time = get_time();
 		philos[i].philo_nb = i;
-		// philos[i].eat_nb = 0;
 		philos[i].eat_count = sem_open_number(i, "/philo_three_eat_count_", 0);
 		init_param(&philos[i], info);
 		philos[i].fork_sem = info->fork_sem;
-		// philos[i].is_dead = is_dead;
-		// philos[i].is_dead_bsem = is_dead_bsem;
 		i++;
 	}
 	return (0);
@@ -36,29 +31,12 @@ static int	init_philo(t_info *info)
 
 static int	init_philos(int num, t_info *info)
 {
-	/*
-	int		*is_dead;
-	sem_t	*is_dead_bsem;
-	*/
 	t_philo	*philos;
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * num);
 	if (philos == NULL)
 		return (error_log(ERROR_MALLOC));
 	info->philos = philos;
-	/*
-	is_dead = (int *)malloc(sizeof(int));
-	if (is_dead == NULL)
-		return (error_log(ERROR_MALLOC));
-	*is_dead = 0;
-	info->is_dead = is_dead;
-	sem_unlink("/philo_three_is_dead_bsem");
-	is_dead_bsem = sem_open("/philo_three_is_dead_bsem", O_CREAT, 0600, 1);
-	if (is_dead_bsem == NULL)
-		return (error_log(ERROR_SEM_OPEN));
-	info->is_dead_bsem = is_dead_bsem;
-	init_philo(info, is_dead, is_dead_bsem);
-	*/
 	init_philo(info);
 	return (0);
 }

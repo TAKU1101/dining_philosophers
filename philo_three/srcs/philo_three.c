@@ -8,7 +8,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (philo_exec(&info))
 		return (1);
-	(void)argc;
-	(void)argv;
+	if (free_info(&info))
+		return (1);
 	return (0);
 }

@@ -1,11 +1,31 @@
 #include "philo_three.h"
 
+static int	philo_wait(t_info *info)
+{
+	int	i;
+	int	flag;
+	int	status;
+
+	i = 0;
+	flag = 1;
+	while (i < info->num_of_people)
+	{
+		waitpid(-1, &status, 0);
+		if (flag && WSTOPSIG(status))
+		{
+			philo_log(WSTOPSIG(status) - 1, LOG_DIED);
+			flag = 0;
+		}
+		if (status != SIGILL)
+			kill_all_process(info);
+		i++;
+	}
+	return (0);
+}
+
 int	philo_exec(t_info *info)
 {
-	// pid_t	pid;
 	int		i;
-	int		status;
-	int		flag;
 
 	i = 0;
 	while (i < info->num_of_people)
@@ -24,19 +44,6 @@ int	philo_exec(t_info *info)
 	}
 	pthread_create(&(info->counter_monitor), NULL, \
 			count_monitor, (void *)info);
-	i = 0;
-	flag = 1;
-	while (i < info->num_of_people)
-	{
-		waitpid(-1, &status, 0);
-		if (flag && WSTOPSIG(status))
-		{
-			philo_log(WSTOPSIG(status) - 1, LOG_DIED);
-			flag = 0;
-		}
-		if (status != SIGILL)
-			kill_all_process(info);
-		i++;
-	}
+	philo_wait(info);
 	return (0);
 }
