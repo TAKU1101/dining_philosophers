@@ -26,7 +26,7 @@
 # define LOG_EATING		"is eating"
 # define LOG_SLEEPING	"is sleeping"
 # define LOG_THINKING	"is thinking"
-# define LOG_DIED		"is died ============================"
+# define LOG_DIED		"is died"
 
 typedef struct s_philo
 {
@@ -40,8 +40,8 @@ typedef struct s_philo
 	pid_t			pid;
 	long			last_eat_time;
 	sem_t			*let_bsem;
-	int				*is_dead;
-	sem_t			*is_dead_bsem;
+	// int				*is_dead;
+	// sem_t			*is_dead_bsem;
 	sem_t			*fork_sem;
 	pthread_t		monitor;
 }					t_philo;
@@ -53,8 +53,8 @@ typedef struct s_info
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
-	int				*is_dead;
-	sem_t			*is_dead_bsem;
+	// int				*is_dead;
+	// sem_t			*is_dead_bsem;
 	sem_t			*fork_sem;
 	t_philo			*philos;
 	pid_t			monitor_pid;

@@ -5,6 +5,7 @@ int	philo_exec(t_info *info)
 	// pid_t	pid;
 	int		i;
 	int		status;
+	int		flag;
 
 	i = 0;
 	while (i < info->num_of_people)
@@ -24,10 +25,17 @@ int	philo_exec(t_info *info)
 	pthread_create(&(info->counter_monitor), NULL, \
 			count_monitor, (void *)info);
 	i = 0;
-	while (i < info->num_of_people + 1)
+	flag = 1;
+	while (i < info->num_of_people)
 	{
 		waitpid(-1, &status, 0);
-		printf("%d %d\n", status, SIGILL);
+		if (flag && WSTOPSIG(status))
+		{
+			philo_log(WSTOPSIG(status) - 1, LOG_DIED);
+			flag = 0;
+		}
+		if (status != SIGILL)
+			kill_all_process(info);
 		i++;
 	}
 	return (0);

@@ -11,26 +11,13 @@ static int	main_loop(t_philo *philo, int ret)
 			return (error_log(ERROR_SEM_WAIT));
 		if (get_time() - philo->last_eat_time >= philo->time_to_die)
 		{
-			// printf("%ld, %ld\n", get_time(), info->philos[i].last_eat_time);
-			philo_log(i, LOG_DIED);
-			exit(1);
-			// *(philo->is_dead) = philo->num_of_people;
-			// printf("%d %p in monitor\n", *(info->is_dead), info->is_dead);
+			// philo_log(philo->philo_nb, LOG_DIED);
+			// printf("%d %d\n", i, philo->philo_nb);
+			exit(1 + philo->philo_nb);
+			// exit(1 + philo->philo_nb);
 		}
 		if (sem_post(philo->let_bsem))
 			return (error_log(ERROR_SEM_POST));
-		/*
-		i++;
-		if (i == philo->num_of_people)
-			i = 0;
-		*/
-		/*
-		if (sem_wait(philo->is_dead_bsem))
-			return (error_log(ERROR_SEM_WAIT));
-		ret = *(philo->is_dead);
-		if (sem_post(philo->is_dead_bsem))
-			return (error_log(ERROR_SEM_POST));
-		*/
 	}
 	return (0);
 }
@@ -44,13 +31,6 @@ void	*monitor(void *arg)
 	philo = (t_philo *)arg;
 	i = 0;
 	ret = 0;
-	/*
-	if (sem_wait(philo->is_dead_bsem))
-		return (NULL);
-	ret = *(philo->is_dead);
-	if (sem_post(philo->is_dead_bsem))
-		return (NULL);
-	*/
 	if (main_loop(philo, ret))
 		return (NULL);
 	return (NULL);
