@@ -25,7 +25,7 @@
 # define LOG_EATING		"is eating"
 # define LOG_SLEEPING	"is sleeping"
 # define LOG_THINKING	"is thinking"
-# define LOG_DIED		"is died"
+# define LOG_DIED		"is died ============================"
 
 typedef struct s_philo
 {

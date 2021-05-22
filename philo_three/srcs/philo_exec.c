@@ -13,8 +13,10 @@ int	philo_exec(t_info *info)
 			return (error_log(ERROR_FORK));
 		else if (!pid)
 		{
+			// info->philos[i].last_eat_time = get_time();
+			// printf("%d: %p\n", i, &(info->philos[i].last_eat_time));
 			philo_work((void *)(&info->philos[i]));
-			break;
+			exit(0);
 		}
 		i++;
 	}
@@ -25,7 +27,9 @@ int	philo_exec(t_info *info)
 			return (error_log(ERROR_FORK));
 		else if (!pid)
 		{
+			// printf("monidor: %p\n", &(info->philos[0].last_eat_time));
 			monitor((void *)info);
+			exit(0);
 		}
 		printf("after %d\n", i);
 	}

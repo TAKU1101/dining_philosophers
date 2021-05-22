@@ -11,6 +11,8 @@ static int	is_dead(t_philo *philo)
 		return (error_log(ERROR_SEM_WAIT));
 	if (*(philo->is_dead) == philo->num_of_people)
 		ret = 1;
+	// printf("%d %p\n", *(philo->is_dead), philo->is_dead);
+	// printf("time %d: %ld\n", philo->philo_nb, get_time() - philo->last_eat_time);
 	if (sem_post(philo->is_dead_bsem))
 		return (error_log(ERROR_SEM_POST));
 	return (ret);

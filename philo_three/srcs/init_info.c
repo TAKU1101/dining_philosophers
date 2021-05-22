@@ -20,7 +20,7 @@ static int	init_philo(t_info *info, int *is_dead,
 	while (i < info->num_of_people)
 	{
 		philos[i].let_bsem = sem_open_number(i);
-		philos[i].last_eat_time = -1;
+		philos[i].last_eat_time = get_time();
 		philos[i].philo_nb = i;
 		philos[i].eat_nb = 0;
 		init_param(&philos[i], info);
