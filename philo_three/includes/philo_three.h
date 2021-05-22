@@ -8,6 +8,7 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <signal.h>
 
 # define ERROR_PARAM_NUM		"The number of arguments should be 4-5."
 # define ERROR_PARAM			"Invalid argument value"
@@ -57,6 +58,7 @@ typedef struct s_info
 	sem_t			*fork_sem;
 	t_philo			*philos;
 	pid_t			monitor_pid;
+	pthread_t		counter_monitor;
 }					t_info;
 
 int					ft_atoi(const char *str);
@@ -75,5 +77,7 @@ int					sem_close_number(sem_t *sem, int n, char *tag);
 int	philo_exec(t_info *info);
 void	*philo_work(void *arg);
 void	*monitor(void *arg);
+void	*count_monitor(void *arg);
+int	kill_all_process(t_info *info);
 
 #endif

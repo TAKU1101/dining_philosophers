@@ -55,3 +55,28 @@ void	*monitor(void *arg)
 		return (NULL);
 	return (NULL);
 }
+
+void	*count_monitor(void *arg)
+{
+	t_info	*info;
+	int		i;
+	int		j;
+
+	info = (t_info *)arg;
+	if (info->must_eat == -1)
+		return (NULL);
+	i = 0;
+	while (i < info->num_of_people)
+	{
+		j = 0;
+		while (j < info->must_eat)
+		{
+			sem_wait(info->philos[i].eat_count);
+			j++;
+		}
+		i++;
+	}
+	// all kill
+	kill_all_process(info);
+	return (NULL);
+}
