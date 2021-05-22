@@ -30,7 +30,7 @@
 typedef struct s_philo
 {
 	int				philo_nb;
-	int				eat_nb;
+	sem_t			*eat_count;
 	int				num_of_people;
 	int				time_to_die;
 	int				time_to_eat;
@@ -42,6 +42,7 @@ typedef struct s_philo
 	int				*is_dead;
 	sem_t			*is_dead_bsem;
 	sem_t			*fork_sem;
+	pthread_t		monitor;
 }					t_philo;
 
 typedef struct s_info
@@ -69,8 +70,8 @@ int					error_log(char *msg);
 long				get_time(void);
 void				wait_time(long time);
 int					philo_log(int nb, char *log);
-sem_t				*sem_open_number(int n);
-int					sem_close_number(sem_t *sem, int n);
+sem_t				*sem_open_number(int n, char *tag);
+int					sem_close_number(sem_t *sem, int n, char *tag);
 int	philo_exec(t_info *info);
 void	*philo_work(void *arg);
 void	*monitor(void *arg);

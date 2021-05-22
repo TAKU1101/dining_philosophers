@@ -49,6 +49,8 @@ static int	philo_after_eat(t_philo *philo)
 	philo->last_eat_time = get_time();
 	if (sem_post(philo->let_bsem))
 		return (error_log(ERROR_SEM_POST));
+	sem_post(philo->eat_count);
+	/*
 	philo->eat_nb = philo->eat_nb + 1;
 	if (sem_wait(philo->is_dead_bsem))
 		return (error_log(ERROR_SEM_WAIT));
@@ -56,6 +58,7 @@ static int	philo_after_eat(t_philo *philo)
 		*(philo->is_dead) = *(philo->is_dead) + 1;
 	if (sem_post(philo->is_dead_bsem))
 		return (error_log(ERROR_SEM_POST));
+	*/
 	wait_time(philo->time_to_eat);
 	if (philo_put_fork(philo))
 		return (1);

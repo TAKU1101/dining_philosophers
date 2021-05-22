@@ -15,11 +15,14 @@ int	philo_exec(t_info *info)
 		{
 			// info->philos[i].last_eat_time = get_time();
 			// printf("%d: %p\n", i, &(info->philos[i].last_eat_time));
+			pthread_create(&(info->philos[i].monitor), NULL, \
+					monitor, (void *)&(info->philos[i]));
 			philo_work((void *)(&info->philos[i]));
 			exit(0);
 		}
 		i++;
 	}
+	/*
 	if (pid)
 	{
 		pid = fork();
@@ -33,6 +36,7 @@ int	philo_exec(t_info *info)
 		}
 		printf("after %d\n", i);
 	}
+	*/
 	i = 0;
 	while (i < info->num_of_people + 1)
 	{

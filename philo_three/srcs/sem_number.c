@@ -1,6 +1,6 @@
 #include "philo_three.h"
 
-char	*gen_name(int n)
+char	*gen_name(int n, char *tag)
 {
 	char	*number;
 	char	*tmp;
@@ -8,7 +8,7 @@ char	*gen_name(int n)
 	number = ft_itoa(n);
 	if (number == NULL)
 		return (NULL);
-	tmp = ft_strjoin("/philo_two_let_", number);
+	tmp = ft_strjoin(tag, number);
 	if (tmp == NULL)
 		return (NULL);
 	free(number);
@@ -16,12 +16,12 @@ char	*gen_name(int n)
 	return (tmp);
 }
 
-sem_t	*sem_open_number(int n)
+sem_t	*sem_open_number(int n, char *tag)
 {
 	sem_t	*sem;
 	char	*name;
 
-	name = gen_name(n);
+	name = gen_name(n, tag);
 	if (name == NULL)
 		return (NULL);
 	sem_unlink(name);
@@ -33,11 +33,11 @@ sem_t	*sem_open_number(int n)
 	return (sem);
 }
 
-int	sem_close_number(sem_t *sem, int n)
+int	sem_close_number(sem_t *sem, int n, char *tag)
 {
 	char	*name;
 
-	name = gen_name(n);
+	name = gen_name(n, tag);
 	if (name == NULL)
 		return (error_log(ERROR_MALLOC));
 	if (sem_close(sem) == -1)
