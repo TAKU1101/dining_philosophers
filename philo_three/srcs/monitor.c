@@ -76,7 +76,6 @@ void	*count_monitor(void *arg)
 		}
 		i++;
 	}
-	// all kill
 	kill_all_process(info);
 	return (NULL);
 }

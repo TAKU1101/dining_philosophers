@@ -16,7 +16,7 @@ char	*gen_name(int n, char *tag)
 	return (tmp);
 }
 
-sem_t	*sem_open_number(int n, char *tag)
+sem_t	*sem_open_number(int n, char *tag, int val)
 {
 	sem_t	*sem;
 	char	*name;
@@ -25,7 +25,7 @@ sem_t	*sem_open_number(int n, char *tag)
 	if (name == NULL)
 		return (NULL);
 	sem_unlink(name);
-	sem = sem_open(name, O_CREAT, 0600, 1);
+	sem = sem_open(name, O_CREAT, 0600, val);
 	if (sem == NULL)
 		return (NULL);
 	free(name);

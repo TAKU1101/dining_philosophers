@@ -19,11 +19,11 @@ static int	init_philo(t_info *info, int *is_dead,
 	philos = info->philos;
 	while (i < info->num_of_people)
 	{
-		philos[i].let_bsem = sem_open_number(i, "/philo_three_let_");
+		philos[i].let_bsem = sem_open_number(i, "/philo_three_let_", 1);
 		philos[i].last_eat_time = get_time();
 		philos[i].philo_nb = i;
 		// philos[i].eat_nb = 0;
-		philos[i].eat_count = sem_open_number(i, "/philo_three_eat_count_");
+		philos[i].eat_count = sem_open_number(i, "/philo_three_eat_count_", 0);
 		init_param(&philos[i], info);
 		philos[i].fork_sem = info->fork_sem;
 		philos[i].is_dead = is_dead;

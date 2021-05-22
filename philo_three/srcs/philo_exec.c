@@ -4,6 +4,7 @@ int	philo_exec(t_info *info)
 {
 	// pid_t	pid;
 	int		i;
+	int		status;
 
 	i = 0;
 	while (i < info->num_of_people)
@@ -25,7 +26,8 @@ int	philo_exec(t_info *info)
 	i = 0;
 	while (i < info->num_of_people + 1)
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &status, 0);
+		printf("%d %d\n", status, SIGILL);
 		i++;
 	}
 	return (0);
