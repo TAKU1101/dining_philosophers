@@ -13,7 +13,7 @@ void	f1(void);
 void	f2(void);
 
 static int				counter = 0;
-static int				loop_max = 65535;
+static int				loop_max = 10000;
 static pthread_mutex_t	m;
 
 int main(void)
@@ -45,7 +45,7 @@ int main(void)
 
 void	f1(void)
 {
-	int i;
+	int i, tmp;
 
 	i = 0;
 	while (i < loop_max)
@@ -55,6 +55,9 @@ void	f1(void)
 		if ((r = pthread_mutex_lock(&m)) != 0)
 			puts("lock error");
 #endif
+		// tmp = counter; // f1: tmp: 0 f2: tmp: 0
+		// tmp = tmp + 1; // f1: tmp: 1 f2: tmp: 1
+		// counter = tmp; // counter: 1
 		counter++;
 #ifndef NOLOCK
 		if ((r = pthread_mutex_unlock(&m)) != 0)

@@ -11,7 +11,7 @@ static int	main_loop(t_info *info, int ret)
 			return (error_log(ERROR_SEM_WAIT));
 		if (get_time() - info->philos[i].last_eat_time >= info->time_to_die)
 		{
-			philo_log(i + 1, LOG_DIED);
+			philo_log(i, LOG_DIED);
 			*(info->is_dead) = info->num_of_people;
 		}
 		if (sem_post(info->philos[i].let_bsem))
