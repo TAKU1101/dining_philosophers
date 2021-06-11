@@ -10,7 +10,8 @@ static void	init_param(t_philo *philo, t_info *info)
 }
 
 static int	init_philo(t_info *info, int *is_dead, \
-								pthread_mutex_t *is_dead_mutex)
+						pthread_mutex_t *is_dead_mutex, \
+						pthread_mutex_t *print_mutex)
 {
 	int		i;
 	t_philo	*philos;
@@ -29,6 +30,7 @@ static int	init_philo(t_info *info, int *is_dead, \
 		philos[i].right = &(info->forks[(i + 1) % info->num_of_people]);
 		philos[i].is_dead = is_dead;
 		philos[i].is_dead_mutex = is_dead_mutex;
+		philos[i].print_mutex = print_mutex;
 		i++;
 	}
 	return (0);
@@ -39,23 +41,26 @@ static int	init_philos(int num, t_info *info)
 	int				*is_dead;
 	t_philo			*philos;
 	pthread_mutex_t	*is_dead_mutex;
+	pthread_mutex_t	*print_mutex;
 
-	philos = (t_philo *)malloc(sizeof(t_philo) * num);
-	if (philos == NULL)
+	if (!wrap_malloc(&philos, sizeof(t_philo) * num))
 		return (error_log(ERROR_MALLOC));
 	info->philos = philos;
-	is_dead = (int *)malloc(sizeof(int));
-	if (is_dead == NULL)
+	if (!wrap_malloc(&is_dead, sizeof(int)))
 		return (error_log(ERROR_MALLOC));
 	*is_dead = 0;
 	info->is_dead = is_dead;
-	is_dead_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (is_dead_mutex == NULL)
+	if (!wrap_malloc(&is_dead_mutex, sizeof(pthread_mutex_t)))
 		return (error_log(ERROR_MALLOC));
 	if (pthread_mutex_init(is_dead_mutex, NULL))
 		return (error_log(ERROR_MUTEX_INIT));
+	if (!wrap_malloc(&print_mutex, sizeof(pthread_mutex_t)))
+		return (error_log(ERROR_MUTEX_INIT));
+	if (pthread_mutex_init(print_mutex, NULL))
+		return (error_log(ERROR_MUTEX_INIT));
 	info->is_dead_mutex = is_dead_mutex;
-	init_philo(info, is_dead, is_dead_mutex);
+	info->print_mutex = print_mutex;
+	init_philo(info, is_dead, is_dead_mutex, print_mutex);
 	return (0);
 }
 

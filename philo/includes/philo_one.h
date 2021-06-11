@@ -36,6 +36,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	long			last_eat_time;
 	pthread_mutex_t	let_mutex;
+	pthread_mutex_t	*print_mutex;
 	int				*is_dead;
 	pthread_mutex_t	*is_dead_mutex;
 	pthread_mutex_t	*left;
@@ -52,6 +53,7 @@ typedef struct s_info
 	int				*is_dead;
 	pthread_mutex_t	*is_dead_mutex;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*print_mutex;
 	t_philo			*philos;
 	pthread_t		monitor;
 }					t_info;
@@ -64,11 +66,13 @@ int					philo_exec(t_info *info);
 void				*philo_work(void *arg);
 int					philo_join(t_info *info);
 int					error_log(char *err_msg);
-int					philo_log(int nb, char *log);
+int					philo_log(int nb, char *log, pthread_mutex_t *print_mutex);
 long				get_time(void);
 void				wait_time(long time);
 int					free_info(t_info *info);
 void				*monitor(void *arg);
 int					check_param(t_info *info);
+int					wrap_malloc(void *p, size_t len);
+void				one_log(t_info *info);
 
 #endif

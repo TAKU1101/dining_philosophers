@@ -24,12 +24,12 @@ static int	philo_take_fork(t_philo *philo)
 	if (ret)
 		return (error_log(ERROR_MUTEX_LOCK));
 	if (!is_dead(philo))
-		philo_log(philo->philo_nb, LOG_TAKEEN);
+		philo_log(philo->philo_nb, LOG_TAKEEN, philo->print_mutex);
 	ret = pthread_mutex_lock(philo->right);
 	if (ret)
 		return (error_log(ERROR_MUTEX_LOCK));
 	if (!is_dead(philo))
-		philo_log(philo->philo_nb, LOG_TAKEEN);
+		philo_log(philo->philo_nb, LOG_TAKEEN, philo->print_mutex);
 	return (0);
 }
 
@@ -45,7 +45,7 @@ static int	philo_put_eat(t_philo *philo)
 static int	philo_after_eat(t_philo *philo)
 {
 	if (!is_dead(philo))
-		philo_log(philo->philo_nb, LOG_EATING);
+		philo_log(philo->philo_nb, LOG_EATING, philo->print_mutex);
 	if (pthread_mutex_lock(&(philo->let_mutex)))
 		return (error_log(ERROR_MUTEX_LOCK));
 	philo->last_eat_time = get_time();
@@ -63,11 +63,11 @@ static int	philo_after_eat(t_philo *philo)
 		return (1);
 	if (is_dead(philo))
 		return (1);
-	philo_log(philo->philo_nb, LOG_SLEEPING);
+	philo_log(philo->philo_nb, LOG_SLEEPING, philo->print_mutex);
 	wait_time(philo->time_to_sleep);
 	if (is_dead(philo))
 		return (1);
-	philo_log(philo->philo_nb, LOG_THINKING);
+	philo_log(philo->philo_nb, LOG_THINKING, philo->print_mutex);
 	return (0);
 }
 

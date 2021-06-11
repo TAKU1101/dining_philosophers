@@ -25,5 +25,6 @@ int	philo_join(t_info *info)
 		pthread_join(info->philos[i].thread, NULL);
 		i++;
 	}
+	pthread_join(info->monitor, NULL);
 	return (0);
 }
