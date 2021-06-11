@@ -13,7 +13,15 @@ static int	philo_wait(t_info *info)
 		waitpid(-1, &status, 0);
 		if (flag && WSTOPSIG(status))
 		{
-			philo_log(WSTOPSIG(status) - 1, LOG_DIED);
+			if (sem_wait(info->print_bsem))
+				return (error_log(ERROR_SEM_WAIT));
+			// printf("%ld %d %s\n", get_time(), WSTOPSIG(status) - 1, LOG_DIED);
+			ft_putnbr_fd(get_time(), 1);
+			write(1, " ", 1);
+			ft_putnbr_fd(WSTOPSIG(status) - 1, 1);
+			write(1, " ", 1);
+			ft_putstr_fd(LOG_DIED, 1);
+			write(1, "\n", 1);
 			flag = 0;
 		}
 		if (status != SIGILL)

@@ -9,7 +9,7 @@ static int	main_loop(t_philo *philo, int ret)
 	{
 		if (sem_wait(philo->let_bsem))
 			return (error_log(ERROR_SEM_WAIT));
-		if (get_time() - philo->last_eat_time >= philo->time_to_die)
+		if (get_time() - philo->last_eat_time > philo->time_to_die)
 		{
 			exit(1 + philo->philo_nb);
 		}

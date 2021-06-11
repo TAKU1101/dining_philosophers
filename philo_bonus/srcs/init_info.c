@@ -24,6 +24,7 @@ static int	init_philo(t_info *info)
 		philos[i].eat_count = sem_open_number(i, "/philo_three_eat_count_", 0);
 		init_param(&philos[i], info);
 		philos[i].fork_sem = info->fork_sem;
+		philos[i].print_bsem = info->print_bsem;
 		i++;
 	}
 	return (0);
@@ -32,10 +33,16 @@ static int	init_philo(t_info *info)
 static int	init_philos(int num, t_info *info)
 {
 	t_philo	*philos;
+	sem_t	*print_bsem;
 
 	philos = (t_philo *)malloc(sizeof(t_philo) * num);
 	if (philos == NULL)
 		return (error_log(ERROR_MALLOC));
+	sem_unlink("/philo_three_print_bsem");
+	print_bsem = sem_open("/philo_three_print_bsem", O_CREAT, 0600, 1);
+	if (print_bsem == NULL)
+		return (error_log(ERROR_SEM_OPEN));
+	info->print_bsem = print_bsem;
 	info->philos = philos;
 	init_philo(info);
 	return (0);

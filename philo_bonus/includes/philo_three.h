@@ -41,6 +41,7 @@ typedef struct s_philo
 	long			last_eat_time;
 	sem_t			*let_bsem;
 	sem_t			*fork_sem;
+	sem_t			*print_bsem;
 	pthread_t		monitor;
 }					t_philo;
 
@@ -52,6 +53,7 @@ typedef struct s_info
 	int				time_to_sleep;
 	int				must_eat;
 	sem_t			*fork_sem;
+	sem_t			*print_bsem;
 	t_philo			*philos;
 	pid_t			monitor_pid;
 	pthread_t		counter_monitor;
@@ -67,7 +69,7 @@ int					init_info(t_info *info, int argc, char *argv[]);
 int					error_log(char *msg);
 long				get_time(void);
 void				wait_time(long time);
-int					philo_log(int nb, char *log);
+int					philo_log(int nb, char *log, sem_t *print_bsem);
 sem_t				*sem_open_number(int n, char *tag, int val);
 int					sem_close_number(sem_t *sem, int n, char *tag);
 int					philo_exec(t_info *info);
@@ -76,5 +78,7 @@ void				*monitor(void *arg);
 void				*count_monitor(void *arg);
 int					kill_all_process(t_info *info);
 int					free_info(t_info *info);
+void				ft_putnbr_fd(unsigned long n, int fd);
+void				ft_putstr_fd(char *s, int fd);
 
 #endif

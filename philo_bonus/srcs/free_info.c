@@ -6,6 +6,8 @@ int	free_info(t_info *info)
 
 	sem_close(info->fork_sem);
 	sem_unlink("/philo_three_fork");
+	sem_close(info->print_bsem);
+	sem_unlink("/philo_three_print_bsem");
 	i = 0;
 	while (i < info->num_of_people)
 	{
