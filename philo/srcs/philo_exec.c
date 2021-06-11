@@ -23,6 +23,11 @@ int	philo_join(t_info *info)
 	while (i < info->num_of_people)
 	{
 		pthread_join(info->philos[i].thread, NULL);
+		if (i == 0)
+		{
+			if (pthread_mutex_lock(info->print_mutex))
+				return (error_log(ERROR_MUTEX_LOCK));
+		}
 		i++;
 	}
 	pthread_join(info->monitor, NULL);
