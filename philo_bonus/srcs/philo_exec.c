@@ -4,7 +4,7 @@ static void	put_last_log(int status)
 {
 	ft_putnbr_fd(get_time(), 1);
 	write(1, " ", 1);
-	ft_putnbr_fd(WSTOPSIG(status) - 1, 1);
+	ft_putnbr_fd(WSTOPSIG(status), 1);
 	write(1, " ", 1);
 	ft_putstr_fd(LOG_DIED, 1);
 	write(1, "\n", 1);
