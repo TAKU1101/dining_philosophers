@@ -26,7 +26,7 @@ int	philo_log(int nb, char *log, pthread_mutex_t *print_mutex)
 {
 	if (pthread_mutex_lock(print_mutex))
 		return (error_log(ERROR_MUTEX_LOCK));
-	printf("%ld %d %s\n", get_time(), nb, log);
+	printf("%ld %d %s\n", get_time(), nb + 1, log);
 	if (pthread_mutex_unlock(print_mutex))
 		return (error_log(ERROR_MUTEX_UNLOCK));
 	return (0);
@@ -34,7 +34,7 @@ int	philo_log(int nb, char *log, pthread_mutex_t *print_mutex)
 
 void	one_log(t_info *info)
 {
-	printf("%ld %d %s\n", get_time(), 0, LOG_TAKEEN);
+	printf("%ld %d %s\n", get_time(), 0 + 1, LOG_TAKEEN);
 	wait_time(info->time_to_die);
-	printf("%ld %d %s\n", get_time(), 0, LOG_DIED);
+	printf("%ld %d %s\n", get_time(), 0 + 1, LOG_DIED);
 }

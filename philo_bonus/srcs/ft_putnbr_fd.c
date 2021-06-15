@@ -7,7 +7,7 @@ static void	ft_putchar_fd(char c, int fd)
 
 static void	put_num(unsigned long num, int fd)
 {
-	unsigned long n;
+	unsigned long	n;
 
 	n = num % 10;
 	if (num)
@@ -17,7 +17,7 @@ static void	put_num(unsigned long num, int fd)
 	}
 }
 
-void		ft_putnbr_fd(unsigned long n, int fd)
+void	ft_putnbr_fd(unsigned long n, int fd)
 {
 	if (n == 0)
 		ft_putchar_fd('0', fd);

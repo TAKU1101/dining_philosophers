@@ -12,7 +12,7 @@ int	free_info(t_info *info)
 	while (i < info->num_of_people)
 	{
 		sem_close_number(info->philos[i].let_bsem, i, "/philo_three_let_");
-		sem_close_number(info->philos[i].eat_count, i, \
+		sem_unlink_number(i, \
 				"/philo_three_eat_count_");
 		i++;
 	}

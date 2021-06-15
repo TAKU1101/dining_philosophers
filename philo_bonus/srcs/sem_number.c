@@ -48,3 +48,17 @@ int	sem_close_number(sem_t *sem, int n, char *tag)
 	name = NULL;
 	return (0);
 }
+
+int	sem_unlink_number(int n, char *tag)
+{
+	char	*name;
+
+	name = gen_name(n, tag);
+	if (name == NULL)
+		return (error_log(ERROR_MALLOC));
+	if (sem_unlink(name) == -1)
+		return (error_log(ERROR_SEM_UNLINK));
+	free(name);
+	name = NULL;
+	return (0);
+}

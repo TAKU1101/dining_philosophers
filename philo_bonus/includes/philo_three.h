@@ -72,6 +72,7 @@ void				wait_time(long time);
 int					philo_log(int nb, char *log, sem_t *print_bsem);
 sem_t				*sem_open_number(int n, char *tag, int val);
 int					sem_close_number(sem_t *sem, int n, char *tag);
+int					sem_unlink_number(int n, char *tag);
 int					philo_exec(t_info *info);
 void				*philo_work(void *arg);
 void				*monitor(void *arg);

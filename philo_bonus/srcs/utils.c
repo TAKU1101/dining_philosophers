@@ -37,10 +37,9 @@ int	philo_log(int nb, char *log, sem_t *print_bsem)
 {
 	if (sem_wait(print_bsem))
 		return (error_log(ERROR_SEM_WAIT));
-	// printf("%ld %d %s\n", get_time(), nb, log);
 	ft_putnbr_fd(get_time(), 1);
 	write(1, " ", 1);
-	ft_putnbr_fd(nb, 1);
+	ft_putnbr_fd(nb + 1, 1);
 	write(1, " ", 1);
 	ft_putstr_fd(log, 1);
 	write(1, "\n", 1);

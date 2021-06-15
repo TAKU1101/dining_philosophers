@@ -1,5 +1,15 @@
 #include "philo_three.h"
 
+static void	put_last_log(int status)
+{
+	ft_putnbr_fd(get_time(), 1);
+	write(1, " ", 1);
+	ft_putnbr_fd(WSTOPSIG(status) - 1, 1);
+	write(1, " ", 1);
+	ft_putstr_fd(LOG_DIED, 1);
+	write(1, "\n", 1);
+}
+
 static int	philo_wait(t_info *info)
 {
 	int	i;
@@ -15,13 +25,7 @@ static int	philo_wait(t_info *info)
 		{
 			if (sem_wait(info->print_bsem))
 				return (error_log(ERROR_SEM_WAIT));
-			// printf("%ld %d %s\n", get_time(), WSTOPSIG(status) - 1, LOG_DIED);
-			ft_putnbr_fd(get_time(), 1);
-			write(1, " ", 1);
-			ft_putnbr_fd(WSTOPSIG(status) - 1, 1);
-			write(1, " ", 1);
-			ft_putstr_fd(LOG_DIED, 1);
-			write(1, "\n", 1);
+			put_last_log(status);
 			flag = 0;
 		}
 		if (status != SIGILL)

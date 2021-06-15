@@ -72,7 +72,7 @@ int	init_info(t_info *info, int argc, char *argv[])
 	if (argc == 6)
 	{
 		info->must_eat = ft_atoi(argv[5]);
-		if (info->must_eat < 0)
+		if (info->must_eat <= 0)
 			return (error_log(ERROR_PARAM));
 	}
 	if (check_param(info))
