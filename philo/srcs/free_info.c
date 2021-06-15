@@ -9,6 +9,10 @@ static int	mutex_destroy(t_info *info)
 		return (error_log(ERROR_MUTEX_DESTROY));
 	free(info->philos[0].is_dead_mutex);
 	info->philos[0].is_dead_mutex = NULL;
+	if (pthread_mutex_destroy(info->print_mutex))
+		return (error_log(ERROR_MUTEX_DESTROY));
+	free(info->print_mutex);
+	info->print_mutex = NULL;
 	i = 0;
 	forks = info->forks;
 	while (i < info->num_of_people)
