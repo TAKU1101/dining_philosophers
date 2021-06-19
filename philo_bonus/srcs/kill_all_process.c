@@ -8,7 +8,7 @@ int	kill_all_process(t_info *info)
 	i = 0;
 	while (i < info->num_of_people)
 	{
-		ret = kill(info->philos[i].pid, SIGILL);
+		ret = kill(info->philos[i].pid, SIGKILL);
 		i++;
 	}
 	return (0);
